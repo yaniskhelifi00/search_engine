@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlixSearch - Netflix Movie Search Engine</title>
+    {% load static %}  <!-- Load the static tag library -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif; /* Improved body font */
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        /* Create a separate layer for the background image */
+        .background-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Ensure it's behind other content */
+            background-image: url('{% static "assets/img/background/wp1917119-netflix-wallpapers.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            filter: blur(5px); /* Apply blur effect to the background image */
+            -webkit-filter: blur(5px); /* For older browsers */
+        }
+        .logo-layer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 800px; /* Increased width */
+            height: 500px; /* Increased height */
+            z-index: -1; /* Ensure it's behind other content */
+            background-image: url('{% static "assets/img/brands/netflix.png" %}');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: blur(5px); /* Apply blur effect to the logo */
+            -webkit-filter: blur(5px); /* For older browsers */
+            transform: translate(-50%, -50%); /* Center the logo */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(187, 180, 180, 0.9); /* Adding some transparency */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: relative; /* Ensure content is positioned relative to this container */
+            z-index: 1; /* Ensure it's above the background layer */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-family: 'Montserrat', sans-serif; /* Heading font */
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8); /* Text shadow for lighting effect */
+        }
+
+        .search-form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 60%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+            font-family: 'Lato', sans-serif; /* Input font */
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s; /* Smooth transition effects */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+            font-family: 'Montserrat', sans-serif; /* Button font */
+        }
+
+        .search-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px); /* Slight lift effect on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+        }
+
+        .search-results {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+        }
+
+        .search-results h2 {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.8rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Text shadow for lighting effect */
+            font-family: 'Montserrat', sans-serif; /* Results heading font */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background layer for the blurred image -->
+    <div class="background-layer"></div>
+
+     <!-- Blurred Netflix logo layer -->
+     <div class="logo-layer"></div>
+
+    <div class="container">
+        <h1>FlixSearch - Netflix Movie Search</h1>
+        <form class="search-form" action="{% url 'search' %}" method="GET">
+            <input type="text" class="search-input" name="search_query" placeholder="Enter your search..." required>
+            <button type="submit" class="search-button">Search</button>
+        </form>
+        {% if query %}
+        <div class="search-results">
+            <h2>Search Results for "{{ query }}"</h2>
+            <!-- Display search results here -->
+        </div>
+        {% endif %}
+    </div>
+    
+</body>
+</html>

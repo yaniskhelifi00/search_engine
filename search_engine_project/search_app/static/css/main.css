@@ -1,0 +1,13 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    /* Add blurry background image */
+    background-image: url('your-image-url.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(10px);
+    -webkit-filter: blur(10px); /* For older browsers */
+    height: 100%; /* Ensure background covers entire viewport */
+}

@@ -1,0 +1,16 @@
+env_name:search_engine
+project name:search_engine_project
+app name:search_app
+
+-unzip this Rar,go to the "Django" folder and run a terminal
+
+commandes to run the app:
+1-search_engine\scripts\activate
+2-pip install django (to install the django framework on the environement)
+3-cd search_engine_project
+4-Python manage.py runserver
+
+After running this commands on your terminal,navigate in your browser to this link:
+http://127.0.0.1:8000/index/
+
+Done!

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    {% load static %}  <!-- Load the static tag library -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: 'Lato', sans-serif; /* Body font */
+            color: #333; 
+        }
+
+        /* Create a separate layer for the background image */
+        .background-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Ensure it's behind other content */
+            background-image: url('{% static "assets/img/background/wp1917119-netflix-wallpapers.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            filter: blur(5px); /* Apply blur effect to the background image */
+            -webkit-filter: blur(5px); /* For older browsers */
+        }
+
+        .logo-layer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 800px; /* Increased width */
+            height: 500px; /* Increased height */
+            z-index: -1; /* Ensure it's behind other content */
+            background-image: url('{% static "assets/img/brands/netflix.png" %}');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: blur(5px); /* Apply blur effect to the logo */
+            -webkit-filter: blur(5px); /* For older browsers */
+            transform: translate(-50%, -50%); /* Center the logo */
+        }
+
+        .navbar {
+            background-color: #2326298f; /* Dark gray */
+        }
+
+        .navbar-brand {
+            color: #fff; /* White */
+            font-weight: bold;
+            font-size: 1.5rem;
+            font-family: 'Montserrat', sans-serif; /* Navbar brand font */
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7); /* Text shadow for lighting effect */
+        }
+
+        .h {
+            color: #ffee00;
+            font-size: 2.5rem;
+            font-family: 'Montserrat', sans-serif; /* Heading font */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8); /* Text shadow for lighting effect */
+        }
+
+        .qEmo {
+            color: #ffee00;
+            font-size: 1.2rem;
+            font-family: 'Montserrat', sans-serif; /* Emotion font */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Text shadow for lighting effect */
+        }
+
+        .result-card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            margin-bottom: 20px;
+            cursor: pointer; /* Add cursor pointer for hover effect */
+        }
+
+        .result-card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px); /* Slight lift effect on hover */
+        }
+
+        .score-badge {
+            color: #e60000; /* Red */
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+            font-family: 'Montserrat', sans-serif; /* Score badge font */
+        }
+
+        .return-button {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #343a40;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-family: 'Montserrat', sans-serif; /* Button font */
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7); /* Text shadow for lighting effect */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .return-button:hover {
+            background-color: #495057; /* Darker shade on hover */
+            transform: translateY(-3px); /* Slight lift effect on hover */
+        }
+
+        a {
+            color: #007bff; /* Link color */
+            text-decoration: none; /* Remove default underline */
+            transition: color 0.3s ease; /* Smooth color transition */
+            font-weight: bold; /* Make links bold */
+            font-family: 'Montserrat', sans-serif; /* Link font */
+        }
+
+        a:hover {
+            color: #0056b3; /* Change color on hover */
+        }
+
+        /* Popover Content Styling */
+        .popover-content {
+            max-width: 300px; /* Set max width for popover content */
+        }
+
+        /* Customize Popover Arrow */
+        .popover {
+            border-radius: 10px; /* Add border radius to popover */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+        }
+
+        .popover-arrow {
+            display: none; /* Hide the arrow */
+        }
+    </style>
+</head>
+<body>
+    <!-- Background layer for the blurred image -->
+    <div class="background-layer"></div>
+
+    <!-- Blurred Netflix logo layer -->
+    <div class="logo-layer"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <h2 class="navbar-brand">Search Results</h2>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                {% if search_results %}
+                    <h1 class="h">Search Results for "{{ search_query }}"</h1>
+                    <p class="qEmo">Emotion detected: {{ query_emotion }}</p>
+                    {% for result in search_results %}
+                        <div class="result-card mb-4" data-toggle="popover" data-trigger="hover" data-placement="right" data-html="true" title="{{ result.nom_doc }}" data-content="Type: {{ result.document_type }}<br>Director: {{ result.document_director }}<br>Release year: {{ result.document_release_year }}<br>Description: {{ result.document_content }}<br>Rating: {{ result.document_rating }}">
+                            <h2><a href="https://www.google.com/search?q={{ result.nom_doc }}" target="_blank">{{ result.nom_doc }}</a></h2>
+                            <span class="badge score-badge">Relevance Score: {{ result.score }}</span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-danger" role="alert">
+                        No results found!
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <a href="{% url 'index' %}" class="btn btn-primary return-button">Return to Index</a>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Initialize Bootstrap Popovers
+        $(function () {
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
+</body>
+</html>

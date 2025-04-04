@@ -1,0 +1,8 @@
+@keyframes fadeIn {
+    from {
+      opacity: 0.5; /* Start with an opacity of 0 */
+    }
+    to {
+      opacity: 1; /* End with an opacity of 1 */
+    }
+  }
