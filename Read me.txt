@@ -4,7 +4,7 @@ app name:search_app
 
 -unzip this Rar,go to the "Django" folder and run a terminal
 
-commandes to run the app:
+commands to run the app:
 1-search_engine\scripts\activate
 2-pip install django (to install the django framework on the environement)
 3-cd search_engine_project
